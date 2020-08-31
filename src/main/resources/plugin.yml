@@ -1,0 +1,8 @@
+name: BeCaptcha
+version: ${project.version}
+main: me.mical.becaptcha.BeCaptcha
+api-version: "1.13"
+authors: [Mical]
+commands:
+  becaptcha:
+    usage: /<command>

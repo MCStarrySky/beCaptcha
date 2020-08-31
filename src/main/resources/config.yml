@@ -1,0 +1,6 @@
+Captcha:
+  Index: 6
+Commands:
+  - "/test1"
+  - "/test2"
+TimedOut: 120
