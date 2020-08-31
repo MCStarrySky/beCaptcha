@@ -14,6 +14,7 @@ public final class BeCaptcha extends PPlugin {
         super.onEnable();
     }
 
+
     @Override
     protected void preload() {
         printLogo();

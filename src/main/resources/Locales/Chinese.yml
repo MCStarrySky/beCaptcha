@@ -6,6 +6,6 @@ Plugin:
 Lang:
   EnterCaptcha: "您在执行 &c{0} &7命令前需要先输入验证码, 验证码为: &c{1} &7. 输入 &ccancel &7取消. &7(延时 &c{2}s&7)"
   InvalidCaptcha: "验证码错误，请核对您输入的验证码并重新执行指令."
-  Succsssful: "验证码正确."
+  Successful: "验证码正确."
   CancelTask: "已成功取消操作."
   TimedOut: "您已超过延时时间, 请重新操作. (&c{0}s&7)"
