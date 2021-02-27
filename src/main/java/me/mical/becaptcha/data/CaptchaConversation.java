@@ -9,19 +9,22 @@ import org.bukkit.conversations.StringPrompt;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.serverct.parrot.parrotx.PPlugin;
-import org.serverct.parrot.parrotx.utils.I18n;
+import org.serverct.parrot.parrotx.api.ParrotXAPI;
+import org.serverct.parrot.parrotx.utils.i18n.I18n;
 
 import java.util.Objects;
 
 public class CaptchaConversation extends StringPrompt {
 
     private final PPlugin plugin;
+    private final I18n lang;
     private final Player user;
     private final String captcha;
     private final String commandLine;
 
     public CaptchaConversation(Player user, String captcha, String commandLine) {
-        this.plugin = BeCaptcha.getInstance();
+        this.plugin = ParrotXAPI.getPlugin(BeCaptcha.class);
+        this.lang = plugin.getLang();
         this.user = user;
         this.captcha = captcha;
         this.commandLine = commandLine;
@@ -29,20 +32,17 @@ public class CaptchaConversation extends StringPrompt {
 
     @Override
     public String getPromptText(ConversationContext context) {
-        int timedOut = ConfigManager.timedOut;
-        return plugin.lang.getWithFormat(plugin.localeKey, I18n.Type.WARN, "Lang", "EnterCaptcha", commandLine, captcha, timedOut);
+        return lang.data.getWarn("Lang", "EnterCaptcha", commandLine, captcha, ConfigManager.timedOut);
     }
 
     @Override
     public Prompt acceptInput(ConversationContext context, String input) {
         if (Objects.isNull(input) || Objects.equals(input.toLowerCase(), "cancel")) {
-            String cancelMsg = plugin.lang.get(plugin.localeKey, I18n.Type.WARN, "Lang", "CancelTask");
-            I18n.sendAsync(plugin, user, cancelMsg);
+            I18n.sendAsync(plugin, user, lang.data.getWarn("Lang", "CancelTask"));
             return END_OF_CONVERSATION;
         }
         if (Objects.equals(input, captcha)) {
-            String sucMsg = plugin.lang.get(plugin.localeKey, I18n.Type.INFO, "Lang", "Successful");
-            I18n.sendAsync(plugin, user, sucMsg);
+            I18n.sendAsync(plugin, user, lang.data.getInfo("Lang", "Successful"));
             new BukkitRunnable() {
                 @Override
                 public void run() {
@@ -50,8 +50,7 @@ public class CaptchaConversation extends StringPrompt {
                 }
             }.runTaskLater(plugin, 1);
         } else {
-            String failMsg = plugin.lang.get(plugin.localeKey, I18n.Type.ERROR, "Lang", "InvalidCaptcha");
-            I18n.sendAsync(plugin, user, failMsg);
+            I18n.sendAsync(plugin, user, lang.data.getError("Lang", "InvalidCaptcha"));
         }
         return END_OF_CONVERSATION;
     }

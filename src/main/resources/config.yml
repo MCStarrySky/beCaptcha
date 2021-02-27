@@ -1,6 +1,8 @@
-Captcha:
-  Index: 6
+bStats: false
+Debug: false
+Language: "Chinese"
+CaptchaIndex: 6
 Commands:
-  - "/test1"
-  - "/test2"
+  - "test1"
+  - "test2"
 TimedOut: 120

@@ -1,41 +1,32 @@
 package me.mical.becaptcha;
 
-import me.mical.becaptcha.command.CommandHandler;
 import me.mical.becaptcha.config.ConfigManager;
-import me.mical.becaptcha.listener.PlayerCommandListener;
 import org.bukkit.Bukkit;
 import org.serverct.parrot.parrotx.PPlugin;
-import org.serverct.parrot.parrotx.utils.I18n;
+import org.serverct.parrot.parrotx.utils.i18n.I18n;
 
 public final class BeCaptcha extends PPlugin {
 
     @Override
-    public void onEnable() {
-        super.onEnable();
-    }
-
-
-    @Override
     protected void preload() {
         printLogo();
-        lang.log("正在加载 &cBECaptcha &7, 版本 &c" + getDescription().getVersion() + " &7, 作者 &cMical&7.", I18n.Type.INFO, false);
-        pConfig = new ConfigManager();
+        lang.log.info("正在加载 &cBECaptcha &7, 版本 &c{0} &7, 作者 &cMical&7.", getDescription().getVersion());
+        pConfig = ConfigManager.getInstance();
     }
 
     @Override
     protected void load() {
-        registerCommand(new CommandHandler());
-        listen(pluginManager -> pluginManager.registerEvents(new PlayerCommandListener(), this));
-        lang.log("插件已加载.", I18n.Type.INFO, false);
+        lang.log.info("插件已加载.");
     }
 
     @Override
     public void onDisable() {
-        lang.log("插件已卸载.", I18n.Type.INFO, false);
+        super.onDisable();
+        lang.log.info("插件已卸载.");
     }
 
     private void printLogo() {
-        String[] logoFormat = {
+        final String[] logoFormat = {
                 "",
                 I18n.color("&f______________________________                __         .__            "),
                 I18n.color("&f\\______   \\_   _____/\\_   ___ \\_____  _______/  |_  ____ |  |__ _____   "),

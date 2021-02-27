@@ -1,25 +1,35 @@
 package me.mical.becaptcha.config;
 
 import me.mical.becaptcha.BeCaptcha;
+import org.serverct.parrot.parrotx.api.ParrotXAPI;
 import org.serverct.parrot.parrotx.config.PConfig;
+import org.serverct.parrot.parrotx.data.autoload.annotations.PAutoload;
+import org.serverct.parrot.parrotx.data.autoload.annotations.PAutoloadGroup;
 
-import java.io.File;
 import java.util.List;
+import java.util.Objects;
 
+@PAutoloadGroup
 public class ConfigManager extends PConfig {
 
+    private static ConfigManager instance;
+
+
+    @PAutoload("CaptchaIndex")
     public static int captchaIndex;
+    @PAutoload("Commands")
     public static List<String> commandList;
+    @PAutoload("TimeOut")
     public static int timedOut;
 
     public ConfigManager() {
-        super(BeCaptcha.getInstance(), "config", "主配置文件");
+        super(ParrotXAPI.getPlugin(BeCaptcha.class), "config", "主配置文件");
     }
 
-    @Override
-    public void load(File var) {
-        captchaIndex = getConfig().getInt("Captcha.Index");
-        commandList = getConfig().getStringList("Commands");
-        timedOut = getConfig().getInt("TimedOut");
+    public static ConfigManager getInstance() {
+        if (Objects.isNull(instance)) {
+            instance = new ConfigManager();
+        }
+        return instance;
     }
 }
